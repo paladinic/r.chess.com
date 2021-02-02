@@ -1,13 +1,11 @@
 library(httr)
 library(tibble)
-library(dplyr)
 library(shiny)
 
 get_moves = function(moves){
 
   moves = strsplit(x = moves,split = "...",fixed = T)[[1]]
-  moves = strsplit(x = moves,split = ".",fixed = T) %>%
-    unlist()
+  moves = unlist(strsplit(x = moves,split = ".",fixed = T))
   moves = moves[13:length(moves)]
 
   moves = moves[nchar(moves)>8]
@@ -25,8 +23,7 @@ get_user_game_data = function(username){
   user_req = paste0("https://api.chess.com/pub/player/",username,"/games/archives")
 
   # get user game archive
-  user_res = GET(user_req) %>%
-    content()
+  user_res =  content(GET(user_req))
 
   ## CHECK REQUEST ####
 
@@ -52,8 +49,7 @@ get_user_game_data = function(username){
     month_req = archive[[i]]
 
     # get month's games
-    month_res = GET(month_req) %>%
-      content()
+    month_res = content(GET(month_req))
 
     # for each game in month
     for(j in 1:length(month_res$games)){
@@ -62,12 +58,12 @@ get_user_game_data = function(username){
       game = month_res$games[[j]]
 
       # get moves
-      moves = get_moves(game$pgn) %>%
-        paste0(collapse = " ; ")
+      moves = paste0(get_moves(game$pgn),
+                     collapse = " ; ")
 
       # get black & white
-      black = game$black %>% unlist()
-      white = game$white %>% unlist()
+      black = unlist(game$black)
+      white = unlist(game$white)
 
       # get game type (e.g. rapid 10min)
       time_class = game$time_class
@@ -75,8 +71,8 @@ get_user_game_data = function(username){
       # get end time
       t = game$end_time
       t = as.POSIXct(t, origin = "1970-01-01")
-      date = t %>% as.Date()
-      time = t %>% strftime( format="%H:%M:%S")
+      date = as.Date(t)
+      time = strftime(t, format="%H:%M:%S")
 
       # get user and opponent data
       if(tolower(white["username"]) == tolower(username)){
