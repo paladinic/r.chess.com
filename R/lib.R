@@ -64,10 +64,10 @@ get_user_game_data = function(username){
       # get game type (e.g. rapid 10min)
       time_class = game$time_class
 
-      # get end time
+      # get end date time
       t = game$end_time
       t = as.POSIXct(t, origin = "1970-01-01")
-      date = as.Date(t)
+      date = strftime(t, format="%d/%m/%Y")
       time = strftime(t, format="%H:%M:%S")
 
       # get user and opponent data
