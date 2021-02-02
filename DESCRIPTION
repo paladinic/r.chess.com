@@ -1,0 +1,9 @@
+Package: chess.com
+Type: Package
+Title: Access Chess.com API
+Version: 0.1.0
+Author: Claudio Paladini
+Maintainer: The package maintainer <clode.paladini@gmail.com>
+Description: This library gives easy access to chess.com public data via its API.
+Encoding: UTF-8
+LazyData: true
