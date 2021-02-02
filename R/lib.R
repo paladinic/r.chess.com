@@ -23,7 +23,7 @@ get_user_game_data = function(username){
   user_req = paste0("https://api.chess.com/pub/player/",username,"/games/archives")
 
   # get user game archive
-  user_res =  content(GET(user_req))
+  user_res =  httr::content(httr::GET(user_req))
 
   ## CHECK REQUEST ####
 
@@ -49,7 +49,7 @@ get_user_game_data = function(username){
     month_req = archive[[i]]
 
     # get month's games
-    month_res = content(GET(month_req))
+    month_res = httr::content(httr::GET(month_req))
 
     # for each game in month
     for(j in 1:length(month_res$games)){
