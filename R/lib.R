@@ -1,7 +1,3 @@
-library(httr)
-library(tibble)
-library(shiny)
-
 get_moves = function(moves){
 
   moves = strsplit(x = moves,split = "...",fixed = T)[[1]]
