@@ -73,6 +73,7 @@ get_user_game_data = function(username){
       # get user and opponent data
       if(tolower(white["username"]) == tolower(username)){
 
+        color = "white"
         user_username = white["username"]
         user_rating = white["rating"]
         user_outcome = white["result"]
@@ -83,6 +84,7 @@ get_user_game_data = function(username){
 
       }else{
 
+        color = "black"
         user_rating = black["rating"]
         user_outcome = black["result"]
 
@@ -93,7 +95,8 @@ get_user_game_data = function(username){
       }
 
       # build rows
-      row = c(user_rating,
+      row = c(color,
+              user_rating,
               user_outcome,
               opponent_username,
               opponent_rating,
@@ -115,7 +118,8 @@ get_user_game_data = function(username){
   output_df = as.data.frame(output_df)
 
   # rename output_df columns
-  colnames(output_df) = c("user_rating",
+  colnames(output_df) = c("color",
+                          "user_rating",
                           "user_outcome",
                           "opponent_username",
                           "opponent_rating",
