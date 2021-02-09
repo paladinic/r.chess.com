@@ -53,10 +53,6 @@ get_user_game_data = function(username){
       # get game
       game = month_res$games[[j]]
 
-      # get moves
-      moves = paste0(get_moves(game$pgn),
-                     collapse = " ; ")
-
       # get black & white
       black = unlist(game$black)
       white = unlist(game$white)
@@ -94,6 +90,21 @@ get_user_game_data = function(username){
 
       }
 
+
+      # get moves
+      if(is.null(game$pgn)){
+        cat(
+          "Could not retrieve moves for the following game:\n"
+        )
+        cat("opponent:",opponent_username,"\n")
+        cat("date:",date,"\n")
+        cat("time:",time,"\n")
+
+        next
+      }
+      moves = paste0(get_moves(game$pgn),
+                     collapse = " ; ")
+
       # build rows
       row = c(color,
               user_rating,
@@ -111,7 +122,9 @@ get_user_game_data = function(username){
     }
 
     # show progress
-    cat("..")
+    # cat("\014")
+    # cat("..")
+  print(month_req)
   }
 
   # use rownames as column "color"
